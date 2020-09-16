@@ -52,8 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Assignments.cs" />
+    <Compile Include="Entities\Courses.cs" />
     <Compile Include="Entities\IndividualPartBModel.cs" />
+    <Compile Include="Entities\Students.cs" />
+    <Compile Include="Entities\Trainers.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="HelperDB.cs" />
+    <Compile Include="Menus.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

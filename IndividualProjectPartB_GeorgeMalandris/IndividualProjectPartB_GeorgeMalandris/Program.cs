@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IndividualProjectPartB_GeorgeMalandris.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace IndividualProjectPartB_GeorgeMalandris
     {
         static void Main(string[] args)
         {
+            IndividualPartBModel db = new IndividualPartBModel();
+            Menus.menuRunner(db);
         }
     }
 }
