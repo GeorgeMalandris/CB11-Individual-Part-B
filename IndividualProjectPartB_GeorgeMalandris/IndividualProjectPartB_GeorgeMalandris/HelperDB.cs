@@ -17,7 +17,14 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     if (!existsInDb(course, db))
                     {
                         db.Courses.Add(course);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The {0} was succefully added.", value.GetType().Name);
                     }
                     break;
@@ -25,7 +32,14 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     if (!existsInDb(trainer, db))
                     {
                         db.Trainers.Add(trainer);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The {0} was succefully added.", value.GetType().Name);
                     }
                     break;
@@ -33,7 +47,14 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     if (!existsInDb(student, db))
                     {
                         db.Students.Add(student);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The {0} was succefully added.", value.GetType().Name);
                     }
                     break;
@@ -41,7 +62,14 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     if (!existsInDb(assignment, db))
                     {
                         db.Assignments.Add(assignment);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The {0} was succefully added.", value.GetType().Name);
                     }
                     break;

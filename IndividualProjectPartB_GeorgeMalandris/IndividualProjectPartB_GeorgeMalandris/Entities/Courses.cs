@@ -66,9 +66,19 @@ namespace IndividualProjectPartB_GeorgeMalandris.Entities
                 case Trainers trainer:
                     if (!exists(trainer))
                     {
-                        
+                        Trainers trainerToAdd = db.Trainers.Where(item => item.firstName.Equals(trainer.firstName, StringComparison.OrdinalIgnoreCase) && item.lastName.Equals(trainer.lastName, StringComparison.OrdinalIgnoreCase) && item.subject.Equals(trainer.subject, StringComparison.OrdinalIgnoreCase)).First();
+                        if (trainerToAdd != null)
+                            this.Trainers.Add(trainerToAdd);
+                        else
                             this.Trainers.Add(trainer);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The Trainer was succefully added to the Course.");
                     }
                     else
@@ -77,8 +87,19 @@ namespace IndividualProjectPartB_GeorgeMalandris.Entities
                 case Students student:
                     if (!exists(student))
                     {
+                        Students studentToAdd = db.Students.Where(item => item.firstName.Equals(student.firstName, StringComparison.OrdinalIgnoreCase) && item.lastName.Equals(student.lastName, StringComparison.OrdinalIgnoreCase) && item.dateOfBirth == student.dateOfBirth).First();
+                        if (studentToAdd != null)
+                            this.Students.Add(studentToAdd);
+                        else
                             this.Students.Add(student);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The Student was succefully added to the Course.");
                     }
                     else
@@ -87,9 +108,19 @@ namespace IndividualProjectPartB_GeorgeMalandris.Entities
                 case Assignments assignment:
                     if (!exists(assignment))
                     {
-                        
+                        Assignments assignmentToAdd = db.Assignments.Where(item => item.title.Equals(assignment.title, StringComparison.OrdinalIgnoreCase) && item.description.Equals(assignment.description, StringComparison.OrdinalIgnoreCase) && item.subDateTime == assignment.subDateTime).First();
+                        if (assignmentToAdd != null)
+                            this.Assignments.Add(assignmentToAdd);
+                        else
                             this.Assignments.Add(assignment);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
                         Console.WriteLine("The Assignment was succefully added to the Course.");
                     }
                     else
