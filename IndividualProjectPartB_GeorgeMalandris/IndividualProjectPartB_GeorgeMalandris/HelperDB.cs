@@ -9,12 +9,13 @@ namespace IndividualProjectPartB_GeorgeMalandris
 {
     static class HelperDB
     {
-        public static void addToDb<T>(T value, IndividualPartBModel db)
+        public static void addToDb<T>(T value)
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             switch (value)
             {
                 case Courses course:
-                    if (!existsInDb(course, db))
+                    if (!existsInDb(course))
                     {
                         db.Courses.Add(course);
                         try
@@ -29,7 +30,7 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     }
                     break;
                 case Trainers trainer:
-                    if (!existsInDb(trainer, db))
+                    if (!existsInDb(trainer))
                     {
                         db.Trainers.Add(trainer);
                         try
@@ -44,7 +45,7 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     }
                     break;
                 case Students student:
-                    if (!existsInDb(student, db))
+                    if (!existsInDb(student))
                     {
                         db.Students.Add(student);
                         try
@@ -59,7 +60,7 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     }
                     break;
                 case Assignments assignment:
-                    if (!existsInDb(assignment, db))
+                    if (!existsInDb(assignment))
                     {
                         db.Assignments.Add(assignment);
                         try
@@ -78,8 +79,9 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     break;
             }
         }
-        static bool existsInDb<T>(T value, IndividualPartBModel db)
+        static bool existsInDb<T>(T value)
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             bool flag = false;
             switch (value)
             {
@@ -129,7 +131,6 @@ namespace IndividualProjectPartB_GeorgeMalandris
             }
             return flag;
         }
-
         public static void showDbByType<T>(List<T> value)
         {
             string valueT = value.GetType().ToString();
@@ -168,9 +169,9 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     break;
             }
         }
-
-        public static void showStudentsWithMultipleCourses(IndividualPartBModel db)
+        public static void showStudentsWithMultipleCourses()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             int counter = 0;
             Console.WriteLine("The students with multiple courses are:\n");
             foreach (Students item in db.Students.ToList())
@@ -184,8 +185,9 @@ namespace IndividualProjectPartB_GeorgeMalandris
             if (counter == 0)
                 Console.WriteLine("None of the students has multiple courses.");
         }
-        public static void showAssignmentPerCoursePerStudentt(IndividualPartBModel db)
+        public static void showAssignmentPerCoursePerStudentt()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             if (db.Assignments.Count() > 0)
             {
                 foreach (Courses course in db.Courses.ToList())
@@ -200,8 +202,5 @@ namespace IndividualProjectPartB_GeorgeMalandris
             else
                 Console.WriteLine("There no assignment yet.");
         }
-
-
-
     }
 }

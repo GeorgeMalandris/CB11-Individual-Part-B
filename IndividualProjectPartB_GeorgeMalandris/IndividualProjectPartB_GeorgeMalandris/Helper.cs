@@ -168,7 +168,7 @@ namespace IndividualProjectPartB_GeorgeMalandris
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input))
             {
-                Console.WriteLine("Please give a number.");
+                Console.WriteLine("Please give a decimal number.");
             }
             return input;
         }
@@ -177,7 +177,16 @@ namespace IndividualProjectPartB_GeorgeMalandris
             decimal input;
             while (!decimal.TryParse(Console.ReadLine(), out input) || input < minValue)
             {
-                Console.WriteLine("Please give a number bigger than {0}.", minValue);
+                Console.WriteLine("Please give a decimal number bigger than {0}.", minValue);
+            }
+            return input;
+        }
+        public static decimal decimalInput(decimal minValue, decimal maxValue)
+        {
+            decimal input;
+            while (!decimal.TryParse(Console.ReadLine(), out input) || input < minValue || input > maxValue)
+            {
+                Console.WriteLine("Please give a decimal number between {0} and {1}.", minValue, maxValue);
             }
             return input;
         }

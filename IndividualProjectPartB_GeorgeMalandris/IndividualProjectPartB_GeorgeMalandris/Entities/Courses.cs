@@ -59,8 +59,9 @@ namespace IndividualProjectPartB_GeorgeMalandris.Entities
             this.end_date = end_date;
         }
 
-        public void addToCourse<T>(T value, IndividualPartBModel db)
+        public void addToCourse<T>(T value)
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             switch (value)
             {
                 case Trainers trainer:

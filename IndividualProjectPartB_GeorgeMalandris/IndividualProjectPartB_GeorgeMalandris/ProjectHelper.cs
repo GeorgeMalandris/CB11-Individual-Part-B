@@ -10,24 +10,25 @@ namespace IndividualProjectPartB_GeorgeMalandris
     public enum availableTypes { Course = 1, Trainer = 2, Student = 3, Assignment = 4 };
     class ProjectHelper
     {
-        public static void showCourseInfo(availableTypes typeToShow, IndividualPartBModel db)
+        public static void showCourseInfo(availableTypes typeToShow)
         {
             do
             {
                 Console.WriteLine("\nPlease choose the Course you want to see its {0}s.\n", typeToShow);
-                Courses course = chooseCourse(db);
+                Courses course = chooseCourse();
                 course.showConnections(typeToShow);
                 Console.WriteLine("\nWould you like to see the {0}s of another Course? (y/n)", typeToShow);
             } while (Helper.yesInput());
         }
-        public static void showStudentInfo(availableTypes typeToShow, IndividualPartBModel db)
+        public static void showStudentInfo(availableTypes typeToShow)
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             if (!(db.Students.Count() > 0))
             {
                 Console.WriteLine("You don't have any students yet.\nWould you like to add a new student? (y/n)");
                 if (Helper.yesInput())
                 {
-                    addNew(availableTypes.Student, db);
+                    addNew(availableTypes.Student);
                 }
             }
             else
@@ -35,17 +36,17 @@ namespace IndividualProjectPartB_GeorgeMalandris
                 do
                 {
                     Console.WriteLine("\nPlease choose the student you want to see his {0}.", typeToShow);
-                    Students student = chooseStudent(db);
+                    Students student = chooseStudent();
                     student.showConnections(typeToShow, true);
                     Console.WriteLine("\nWould you like to see the {0}s of another Student? (y/n)", typeToShow);
                 } while (Helper.yesInput());
             }
         }
-        public static void addToCourse(availableTypes typeToAdd, IndividualPartBModel db)
+        public static void addToCourse(availableTypes typeToAdd)
         {
-
+            IndividualPartBModel db = new IndividualPartBModel();
             Console.WriteLine("\nPlease choose the course you want to add the {0}.\n", typeToAdd);
-            Courses course = chooseCourse(db);
+            Courses course = chooseCourse();
             bool emptyListFlag = true;
             switch (typeToAdd)
             {
@@ -63,7 +64,7 @@ namespace IndividualProjectPartB_GeorgeMalandris
             {
                 Console.WriteLine("You don't have any {0} yet.\nWould you like to add a new {1}? (y/n)", typeToAdd, typeToAdd);
                 if (Helper.yesInput())
-                    addNewLoop(typeToAdd, course, db);
+                    addNewLoop(typeToAdd, course);
             }
             else
             {
@@ -73,36 +74,36 @@ namespace IndividualProjectPartB_GeorgeMalandris
                     switch (typeToAdd)
                     {
                         case availableTypes.Trainer:
-                            Trainers trainer = chooseTrainer(db);
-                            course.addToCourse(trainer, db);
+                            Trainers trainer = chooseTrainer();
+                            course.addToCourse(trainer);
                             break;
                         case availableTypes.Student:
-                            Students student = chooseStudent(db);
-                            course.addToCourse(student, db);
+                            Students student = chooseStudent();
+                            course.addToCourse(student);
                             break;
                         case availableTypes.Assignment:
-                            Assignments assignment = chooseAssignment(db);
+                            Assignments assignment = chooseAssignment();
                             if (assignment.subDateTime < course.start_date || assignment.subDateTime > course.end_date)
                             {
                                 Console.WriteLine("The submit date of the assignment is out of range of the dates of the course.\nAre you sure you want to add the assignment? (y/n)");
                                 if (Helper.yesInput())
-                                    course.addToCourse(assignment, db);
+                                    course.addToCourse(assignment);
                             }
                             else
-                                course.addToCourse(assignment, db);
+                                course.addToCourse(assignment);
                             break;
                     }
                     Console.WriteLine("\nWould you like to add another {0} to the course? (y/n)", typeToAdd);
                 } while (Helper.yesInput());
             }
         }
-        public static void addNew(availableTypes typeToAdd, IndividualPartBModel db)
+        public static void addNew(availableTypes typeToAdd)
         {
             if (typeToAdd == availableTypes.Course)
             {
                 do
                 {
-                    Courses newcourse = createCourse(db);
+                    Courses newcourse = createCourse();
                     Console.WriteLine();
                     Console.WriteLine("\nWould you like to add another course? (y/n)");
                 } while (Helper.yesInput());
@@ -110,27 +111,27 @@ namespace IndividualProjectPartB_GeorgeMalandris
             else
             {
                 Console.WriteLine("Every {0} must belong to at least one Course.\nPlease choose the Course you want to add the {1}", typeToAdd, typeToAdd);
-                Courses course = chooseCourse(db);
-                addNewLoop(typeToAdd, course, db);
+                Courses course = chooseCourse();
+                addNewLoop(typeToAdd, course);
             }
         }
-        static void addNewLoop(availableTypes typeToAdd, Courses course, IndividualPartBModel db)
+        static void addNewLoop(availableTypes typeToAdd, Courses course)
         {
             do
             {
                 switch (typeToAdd)
                 {
                     case availableTypes.Trainer:
-                        Trainers newTrainer = createTrainer(db);
-                        course.addToCourse(newTrainer, db);
+                        Trainers newTrainer = createTrainer();
+                        course.addToCourse(newTrainer);
                         break;
                     case availableTypes.Student:
-                        Students newStudent = createStudent(db);
-                        course.addToCourse(newStudent, db);
+                        Students newStudent = createStudent();
+                        course.addToCourse(newStudent);
                         break;
                     case availableTypes.Assignment:
-                        Assignments newAssignment = createAssignment(db, course);
-                        course.addToCourse(newAssignment, db);
+                        Assignments newAssignment = createAssignment(course);
+                        course.addToCourse(newAssignment);
                         break;
                     default:
                         Console.WriteLine("You cannot add {0} to the DataBase.", typeToAdd);
@@ -139,7 +140,7 @@ namespace IndividualProjectPartB_GeorgeMalandris
                 Console.WriteLine("\nWould you like to add another {0} to this Course? (y/n)", typeToAdd);
             } while (Helper.yesInput());
         }
-        public static Courses createCourse(IndividualPartBModel db)
+        public static Courses createCourse()
         {
             Console.WriteLine("Please give the Title of the course.");
             string title = Helper.noEmptyStringInputChecker();
@@ -153,10 +154,10 @@ namespace IndividualProjectPartB_GeorgeMalandris
             DateTime endDate = Helper.validDateTimeInput(startDate, new DateTime(9999, 12, 31));
 
             Courses course = new Courses(title, stream, type, startDate, endDate);
-            HelperDB.addToDb(course, db);
+            HelperDB.addToDb(course);
             return course;
         }
-        public static Trainers createTrainer(IndividualPartBModel db)
+        public static Trainers createTrainer()
         {
             Console.WriteLine("Please give the First Name of the trainer.");
             string firstName = Helper.noEmptyStringInputChecker();
@@ -166,10 +167,10 @@ namespace IndividualProjectPartB_GeorgeMalandris
             string subject = Helper.noEmptyStringInputChecker();
 
             Trainers trainer = new Trainers(firstName, lastName, subject);
-            HelperDB.addToDb(trainer, db);
+            HelperDB.addToDb(trainer);
             return trainer;
         }
-        public static Students createStudent(IndividualPartBModel db)
+        public static Students createStudent()
         {
             Console.WriteLine("Please give the First Name of the student.");
             string firstName = Helper.noEmptyStringInputChecker();
@@ -178,13 +179,13 @@ namespace IndividualProjectPartB_GeorgeMalandris
             Console.WriteLine("Please give the birth date of the student. (DD/MM/YYYY)");
             DateTime birthDate = Helper.validDateTimeInput(new DateTime(2020 - 120, 01, 01), DateTime.Now);
             Console.WriteLine("Please give the tuition fees of the student.");
-            decimal tuitionFees = Helper.decimalInput(0);
+            decimal tuitionFees = Helper.decimalInput(0,9999.99m);
 
             Students student = new Students(firstName, lastName, birthDate, tuitionFees);
-            HelperDB.addToDb(student, db);
+            HelperDB.addToDb(student);
             return student;
         }
-        public static Assignments createAssignment(IndividualPartBModel db, Courses course)
+        public static Assignments createAssignment(Courses course)
         {
             Console.WriteLine("Please give the Title of the assignment.");
             string title = Helper.noEmptyStringInputChecker();
@@ -198,35 +199,39 @@ namespace IndividualProjectPartB_GeorgeMalandris
             int totalMark = Helper.intInput(1, 100);
 
             Assignments assignment = new Assignments(title, description, subDate, oralMark, totalMark);
-            HelperDB.addToDb(assignment, db);
+            HelperDB.addToDb(assignment);
             return assignment;
         }
-        public static Courses chooseCourse(IndividualPartBModel db)
+        public static Courses chooseCourse()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             List<Courses> courseList = db.Courses.ToList();
             HelperDB.showDbByType(courseList);
             int listPosition = Helper.menuSelectionChecker(courseList.Count, false) - 1;
             Courses course = courseList[listPosition];
             return course;
         }
-        public static Trainers chooseTrainer(IndividualPartBModel db)
+        public static Trainers chooseTrainer()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             List<Trainers> trainerList = db.Trainers.OrderBy(x=>x.lastName).ToList();
             HelperDB.showDbByType(trainerList);
             int listPosition = Helper.menuSelectionChecker(trainerList.Count, false) - 1;
             Trainers trainer = trainerList[listPosition];
             return trainer;
         }
-        public static Students chooseStudent(IndividualPartBModel db)
+        public static Students chooseStudent()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             List<Students> studentList = db.Students.OrderBy(x=>x.lastName).ToList();
             HelperDB.showDbByType(studentList);
             int listPosition = Helper.menuSelectionChecker(studentList.Count, false) - 1;
             Students student = studentList[listPosition];
             return student;
         }
-        public static Assignments chooseAssignment(IndividualPartBModel db)
+        public static Assignments chooseAssignment()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             List<Assignments> assignmentList = db.Assignments.ToList();
             HelperDB.showDbByType(assignmentList);
             int listPosition = Helper.menuSelectionChecker(assignmentList.Count, false) - 1;
@@ -236,8 +241,9 @@ namespace IndividualProjectPartB_GeorgeMalandris
 
 
 
-        public static void showAssignmentDates(IndividualPartBModel db)
+        public static void showAssignmentDates()
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             do
             {
                 List<Assignments> assignmentsToSubmit = new List<Assignments>();
@@ -270,8 +276,9 @@ namespace IndividualProjectPartB_GeorgeMalandris
             } while (Helper.yesInput());
 
         }
-        public static void showAllConnections(availableTypes typeToShow, IndividualPartBModel db)
+        public static void showAllConnections(availableTypes typeToShow)
         {
+            IndividualPartBModel db = new IndividualPartBModel();
             bool emptyListFlag = true;
             switch (typeToShow)
             {

@@ -11,8 +11,15 @@ namespace IndividualProjectPartB_GeorgeMalandris
     {
         static void Main(string[] args)
         {
-            IndividualPartBModel db = new IndividualPartBModel();
-            Menus.menuRunner(db);
+            try
+            {
+                Menus.menuRunner();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Something went wrong.");
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
